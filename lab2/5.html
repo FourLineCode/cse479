@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSE479 Lab-2</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 2px solid gray;
+        border-collapse: collapse;
+      }
+
+      th {
+        font-size: 24px;
+        font-weight: 400;
+        padding: 8px;
+      }
+
+      td {
+        padding: 0 8px;
+      }
+
+      table {
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td>data 1</td>
+          <td>data 1</td>
+          <td>data 1</td>
+        </tr>
+        <tr>
+          <td>data 1</td>
+          <td colspan="2">data 2</td>
+        </tr>
+        <tr>
+          <td rowspan="2">data 2</td>
+          <td colspan="2">data 2</td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0" colspan="2">data 1</td>
+        </tr>
+        <tr>
+          <td>data 1</td>
+          <td style="border-top: 0" colspan="2">data 2</td>
+        </tr>
+        <tr>
+          <td colspan="3" style="border-bottom: 0">data 3</td>
+        </tr>
+        <tr>
+          <td colspan="3" style="border-top: 0">data 3</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

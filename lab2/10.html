@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="">
+      <table>
+        <tr>
+          <td>Name:</td>
+          <td><input type="text" /></td>
+        </tr>
+        <tr>
+          <td>Address:</td>
+          <td><input type="text" /></td>
+        </tr>
+        <tr>
+          <td>City:</td>
+          <td><input type="text" /></td>
+        </tr>
+        <tr>
+          <td>State:</td>
+          <td><input class="small-input" type="text" /></td>
+        </tr>
+        <tr>
+          <td>Zip:</td>
+          <td><input class="small-input" type="text" /></td>
+        </tr>
+        <tr>
+          <td>Magazine:</td>
+          <td>
+            <select value="news">
+              <option value="news">Newsweek</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Subscription:</td>
+          <td style="display: flex">
+            <span style="margin-right: 16px"
+              ><input type="radio" checked /><label for="">1 year</label></span
+            >
+            <span><input type="radio" /><label for="">2 years</label></span>
+          </td>
+        </tr>
+      </table>
+      <p for="">Additional Comments:</p>
+      <textarea cols="50" rows="10"></textarea>
+      <div>
+        <input type="submit" value="Send Your Order" />
+      </div>
+    </form>
+    <style>
+      input[type="text"] {
+        width: 300px;
+      }
+      p {
+        margin: 0;
+      }
+
+      .small-input {
+        width: 150px;
+      }
+
+      select {
+        width: 150px;
+      }
+
+      span {
+        display: flex;
+      }
+    </style>
+  </body>
+</html>
