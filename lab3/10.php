@@ -1,4 +1,4 @@
-<form action="/www/10.php">
+<form action="/10.php">
   <label for="unit">Unit:</label>
   <input type="number" name="unit" id="unit">
   <input type="submit" value="Submit">

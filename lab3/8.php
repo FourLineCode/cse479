@@ -1,4 +1,4 @@
-<form action="/www/8.php">
+<form action="/8.php">
   <label for="row">Row:</label>
   <input type="number" name="row" value="8">
   <label for="col">Column:</label>
