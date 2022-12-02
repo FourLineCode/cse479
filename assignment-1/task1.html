@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 1</title>
+    <style>
+      legend {
+        color: red;
+      }
+      .flex {
+        display: flex;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <form action="">
+      <table>
+        <tr>
+          <td align="right">User Id:</td>
+          <td class="flex">
+            <input type="text" />
+            <legend>Required and must be of length 5 to 12.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">Password:</td>
+          <td class="flex">
+            <input type="password" />
+            <legend>Required and must be of length 7 to 12.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">Name:</td>
+          <td class="flex">
+            <input type="text" />
+            <legend>Required and alphabets only.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">Address:</td>
+          <td class="flex">
+            <input type="text" />
+            <legend>Optional.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">Country:</td>
+          <td class="flex">
+            <select>
+              <option value="value="(Please select a country)"">(Please select a country)</option>
+            </select>
+            <legend>Required. Must select a country.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">ZIP Code:</td>
+          <td class="flex">
+            <input type="number" />
+            <legend>Required. Must be numeric only.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">Email:</td>
+          <td class="flex">
+            <input type="email" />
+            <legend>Required. Must be valid email.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">Sex:</td>
+          <td class="flex">
+            <input type="radio" name="sex" />
+            <label>Male</label>
+            <input type="radio" name="sex"/>
+            <label>Female</label>
+            <legend>Required.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">Language:</td>
+          <td class="flex">
+            <input type="checkbox" checked />
+            <label>English</label>
+            <input type="checkbox"/>
+            <label>Non English</label>
+            <legend>Required.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td align="right">About:</td>
+          <td class="flex">
+            <textarea cols="30" rows="10"></textarea>
+            <legend>Optional.</legend>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <input type="submit" value="Submit">
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 2</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .wrapper {
+        background-color: rgb(15, 36, 54);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .heading {
+        color: yellow;
+        padding: 1rem;
+        background-color: rgb(222, 146, 5);
+      }
+
+      table {
+        margin: 2rem;
+      }
+
+      footer {
+        color: yellow;
+        padding: 1rem;
+        background-color: rgb(222, 146, 5);
+        display: flex;
+        justify-content: end;
+        gap: 0.5rem;
+      }
+
+      .btn-submit {
+        background-color: rgb(51, 196, 51);
+        padding: 0.5rem;
+        color: white;
+        border: none;
+        border-radius: 3px;
+      }
+
+      .btn-cancel {
+        background-color: red;
+        padding: 0.5rem;
+        color: white;
+        border: none;
+        border-radius: 3px;
+      }
+
+      .label {
+        color: yellow;
+        padding: 0.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      label {
+        color: yellow;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      input[type="number"],
+      select {
+        padding: 0.5rem;
+        width: 400px;
+        border-radius: 5px;
+      }
+      select {
+        width: 100%;
+      }
+      td {
+        padding: 0.5rem;
+      }
+      .flex {
+        display: flex;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h4 class="heading">Sign Up</h4>
+      <form action="">
+        <table>
+          <tr>
+            <td class="label" align="right">First Name</td>
+            <td class="flex">
+              <input type="text" placeholder="Enter First Name..." />
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Last Name</td>
+            <td class="flex">
+              <input type="text" placeholder="Enter Last Name..." />
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Screen Name</td>
+            <td class="flex">
+              <input type="text" placeholder="Enter Screen Name..." />
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Date of Birth</td>
+            <td class="flex">
+              <select>
+                <option>May</option>
+              </select>
+              <select>
+                <option>5</option>
+              </select>
+              <select>
+                <option>1985</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Gender</td>
+            <td class="flex">
+              <input type="radio" name="sex" />
+              <label>Male</label>
+              <input type="radio" name="sex" />
+              <label>Female</label>
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Country</td>
+            <td class="flex">
+              <select>
+                <option>USA</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Email</td>
+            <td class="flex">
+              <input type="text" placeholder="Enter E-Mail..." />
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Phone</td>
+            <td class="flex">
+              <input type="text" placeholder="Enter Phone..." />
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Password</td>
+            <td class="flex">
+              <input type="password" />
+            </td>
+          </tr>
+          <tr>
+            <td class="label" align="right">Confirm Password</td>
+            <td class="flex">
+              <input type="password" />
+            </td>
+          </tr>
+        </table>
+      </form>
+      <footer>
+        <button class="btn-submit">Submit</button>
+        <button class="btn-cancel">Cancel</button>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 3</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        min-width: 800px;
+        border: 2px solid black;
+      }
+      header {
+        background-color: rgb(82, 175, 82);
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+      footer {
+        background-color: lightgray;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0;
+        gap: 1rem;
+      }
+      .btn {
+        background-color: rgb(82, 175, 82);
+        border: none;
+        padding: 0.5rem;
+        color: white;
+        min-width: 100px;
+      }
+      form {
+        padding: 1rem;
+      }
+      .heading {
+        text-decoration: underline;
+      }
+      .grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+      .underline {
+        text-decoration: underline;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+      }
+      input[type="checkbox"] {
+        width: unset;
+      }
+      td {
+        padding: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h4>Workshop Registration</h4>
+        <p>More Actions</p>
+      </header>
+      <form action="">
+        <h4 class="heading">Register now while seats are available!</h4>
+        <div class="grid">
+          <table>
+            <tr>
+              <td>First Name</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Company/Institute</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Address</td>
+              <td><textarea cols="30" rows="10"></textarea></td>
+            </tr>
+            <tr>
+              <td>City</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>State/Province/Region</td>
+              <td>
+                <select>
+                  <option>-Select-</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Country</td>
+              <td>
+                <select>
+                  <option>-Select-</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Phone Number</td>
+              <td><input type="text" /></td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td class="underline">Lunch</td>
+            </tr>
+            <tr>
+              <td>Meal Preference</td>
+              <td>
+                <select>
+                  <option>Vegetarian</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="underline">Payment Details</td>
+            </tr>
+            <tr>
+              <td>Payment Mode</td>
+              <td>
+                <div class="flex">
+                  <input type="checkbox" />
+                  <span> Cash </span>
+                </div>
+                <div class="flex">
+                  <input type="checkbox" />
+                  <span>Cheque</span>
+                </div>
+                <div class="flex">
+                  <input type="checkbox" />
+                  <span>Demand draft</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>DD/Check no.</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Drawn on (Bank name)</td>
+              <td><input type="text" /></td>
+            </tr>
+            <tr>
+              <td>Payable at</td>
+              <td><input type="text" /></td>
+            </tr>
+          </table>
+        </div>
+      </form>
+      <footer>
+        <button class="btn">Submit</button>
+        <button class="btn">Reset</button>
+      </footer>
+    </div>
+  </body>
+</html>
