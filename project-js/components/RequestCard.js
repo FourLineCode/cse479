@@ -49,7 +49,7 @@ export function RequestCard({ request }) {
         className="flex items-center space-x-2 cursor-pointer"
       >
         <div className="flex items-center justify-center w-12 h-12 text-3xl font-bold text-gray-400 bg-gray-700 rounded-full">
-          R
+          {request.from_user.username[0].toUpperCase()}
         </div>
         <div>
           <div className="font-semibold text-md">{request.from_user.username}</div>
