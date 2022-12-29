@@ -1,4 +1,4 @@
-import { ChatIcon, HomeIcon, SearchIcon, UserIcon } from "@heroicons/react/solid";
+import { ChatIcon, HomeIcon, SearchIcon, SparklesIcon, UserIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 
 export function Navbar() {
@@ -8,6 +8,12 @@ export function Navbar() {
         <div className="flex flex-col items-center justify-center h-full px-4 cursor-pointer hover:bg-gray-700">
           <HomeIcon className="w-6 h-6" />
           <div className="text-sm">Home</div>
+        </div>
+      </Link>
+      <Link href="/discover">
+        <div className="flex flex-col items-center justify-center h-full px-4 cursor-pointer hover:bg-gray-700">
+          <SparklesIcon className="w-6 h-6" />
+          <div className="text-sm">Discover</div>
         </div>
       </Link>
       <Link href="/message">
