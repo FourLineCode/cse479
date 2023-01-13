@@ -130,27 +130,84 @@ Route::any('/user/search/{term}', function ($term) {
 });
 
 Route::any('/request/send', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->from || !$body->to) {
+        return response()->status(400);
+    }
+
+    $create_request_query = DB::raw('INSERT INTO FriendRequest (from_user_id, to_user_id) VALUES (?, ?)');
+    DB::select($create_request_query, [$body->from, $body->to]);
+
     return response()->json(["success" => true]);
 });
 
 Route::any('/request/accept', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->from || !$body->to) {
+        return response()->status(400);
+    }
+
+    $delete_request_query = DB::raw('DELETE FROM FriendRequest WHERE from_user_id = ? AND to_user_id = ?');
+    DB::select($delete_request_query, [$body->from, $body->to]);
+
+    $create_friendship_query = DB::raw('INSERT INTO Friendship (first_user_id, second_user_id) VALUES (?, ?)');
+    DB::select($create_friendship_query, [$body->from, $body->to]);
+
     return response()->json(["success" => true]);
 });
 
 Route::any('/request/decline', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->from || !$body->to) {
+        return response()->status(400);
+    }
+
+    $delete_request_query = DB::raw('DELETE FROM FriendRequest WHERE from_user_id = ? AND to_user_id = ?');
+    DB::select($delete_request_query, [$body->from, $body->to]);
+
     return response()->json(["success" => true]);
 });
 
 Route::any('/request/unfriend', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->first || !$body->second) {
+        return response()->status(400);
+    }
+
+    $unfriend_query = DB::raw('DELETE FROM Friendship WHERE (first_user_id = ? OR second_user_id = ?) AND (first_user_id = ? OR second_user_id = ?)');
+    DB::select($unfriend_query, [$body->first, $body->first, $body->second, $body->second]);
+
     return response()->json(["success" => true]);
 });
 
 Route::any('/request/unsend', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->from || !$body->to) {
+        return response()->status(400);
+    }
+
+    $delete_request_query = DB::raw('DELETE FROM FriendRequest WHERE from_user_id = ? AND to_user_id = ?');
+    DB::select($delete_request_query, [$body->from, $body->to]);
+
     return response()->json(["success" => true]);
 });
 
-Route::any('/request/timeline/{id}', function (Request $req) {
-    return response()->json(["success" => true]);
+Route::any('/request/timeline/{id}', function ($id) {
+    if (!$id) {
+        return response()->status(400);
+    }
+
+    $get_pending_request_query = DB::raw('SELECT * FROM FriendRequest WHERE to_user_id = ?');
+    $requests = DB::select($get_pending_request_query, [$id]);
+
+    for ($i = 0; $i < count($requests); $i++) {
+        $get_user_query = DB::raw('SELECT * FROM User WHERE id = ? LIMIT 1');
+        $users = DB::select($get_user_query, [$requests[$i]->from_user_id]);
+
+        $requests[$i]->from_user = $users[0];
+    }
+
+    return response()->json($requests);
 });
 
 Route::any('/post/send', function (Request $req) {
