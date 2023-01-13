@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 // $users = DB::table('User')->get();
@@ -211,50 +212,192 @@ Route::any('/request/timeline/{id}', function ($id) {
 });
 
 Route::any('/post/send', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->post || !$body->author_id) {
+        return response()->status(400);
+    }
+
+    $create_post_query = DB::raw('INSERT INTO Post (post_body, author_id) VALUES (?, ?)');
+    DB::select($create_post_query, [$body->post, $body->author_id]);
+
     return response()->json(["success" => true]);
 });
 
 Route::any('/post/like', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->user_id || !$body->post_id) {
+        return response()->json(["message" => "Invalid request"]);
+    }
+
+    $like_query = DB::raw('INSERT INTO PostLike (post_id, user_id) VALUES (?, ?)');
+    DB::select($like_query, [$body->post_id, $body->user_id]);
+
     return response()->json(["success" => true]);
 });
 
 Route::any('/post/liked', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->user_id || !$body->post_id) {
+        return response()->json(["message" => "Invalid request"]);
+    }
+
+    $get_liked_query = DB::raw('SELECT * FROM PostLike WHERE post_id = ? AND user_id = ? LIMIT 1');
+    $likes = DB::select($get_liked_query, [$body->post_id, $body->user_id]);
+
+    return response()->json(["liked" => count($likes) > 0]);
+});
+
+Route::any('/post/unlike', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->user_id || !$body->post_id) {
+        return response()->json(["message" => "Invalid request"]);
+    }
+
+    $unlike_query = DB::raw('DELETE FROM PostLike WHERE post_id = ? AND user_id = ?');
+    DB::select($unlike_query, [$body->post_id, $body->user_id]);
+
     return response()->json(["success" => true]);
 });
 
-Route::any('/post/unline', function (Request $req) {
+Route::any('/post/timeline/{id}', function ($id) {
+    if (!$id) {
+        return response()->json(["message" => "Provide id"]);
+    }
+
+    $get_friend_ids_query = DB::raw('SELECT CASE WHEN first_user_id = ? THEN second_user_id ELSE first_user_id END AS friend_id FROM Friendship WHERE first_user_id = ? OR second_user_id = ?');
+    $friends = DB::select($get_friend_ids_query, [$id, $id, $id]);
+    $friend_ids = [(int)$id];
+    foreach ($friends as $friend) {
+        array_push($friend_ids, (int)$friend->friend_id);
+    }
+
+    $get_posts_query = DB::raw('SELECT * FROM Post WHERE author_id IN (' . implode(', ', $friend_ids) . ') ORDER BY created_at DESC');
+    $posts = DB::select($get_posts_query);
+
+    for ($i = 0; $i < count($posts); $i++) {
+        $get_user_query = DB::raw('SELECT * FROM User WHERE id = ? LIMIT 1');
+        $users = DB::select($get_user_query, [$posts[$i]->author_id]);
+
+        $get_post_likes_query = DB::raw('SELECT COUNT(*) AS count FROM PostLike WHERE post_id = ?');
+        $likes = DB::select($get_post_likes_query, [$posts[$i]->id]);
+
+        $get_comments_query = DB::raw('SELECT COUNT(*) AS count FROM PostComment WHERE post_id = ?');
+        $comments = DB::select($get_comments_query, [$posts[$i]->id]);
+
+        $posts[$i]->likeCount = $likes[0]->count;
+        $posts[$i]->commentCount = $comments[0]->count;
+        $posts[$i]->author = $users[0];
+    }
+
+    return response()->json($posts);
+});
+
+Route::any('/post/get/{id}', function ($id) {
+    if (!$id) {
+        return response()->json(["message" => "Provide id"]);
+    }
+
+    $get_post_query = DB::raw('SELECT * FROM Post WHERE id = ? LIMIT 1');
+    $posts = DB::select($get_post_query, [$id]);
+
+    if (count($posts) <= 0) {
+        return response()->status(400);
+    }
+
+    $get_author_query = DB::raw('SELECT * FROM User WHERE id = ? LIMIT 1');
+    $authors = DB::select($get_author_query, [$posts[0]->author_id]);
+
+    $get_post_likes_query = DB::raw('SELECT COUNT(*) AS count FROM PostLike WHERE post_id = ?');
+    $likes = DB::select($get_post_likes_query, [$posts[0]->id]);
+
+    $get_comments_query = DB::raw('SELECT * FROM PostComment WHERE post_id = ?');
+    $comments = DB::select($get_comments_query, [$posts[0]->id]);
+
+    for ($i = 0; $i < count($comments); $i++) {
+        $get_comment_author_query = DB::raw('SELECT * FROM User WHERE id = ? LIMIT 1');
+        $users = DB::select($get_comment_author_query, [$comments[$i]->user_id]);
+        $comments[$i]->author = $users[0];
+    }
+
+    $posts[0]->author = $authors[0];
+    $posts[0]->likeCount = $likes[0]->count;
+    $posts[0]->commentCount = count($comments);
+    $posts[0]->comments = $comments;
+
+    return response()->json($posts[0]);
+
     return response()->json(["success" => true]);
 });
 
-Route::any('/post/timeline/{id}', function (Request $req) {
-    return response()->json(["success" => true]);
+Route::any('/post/discover/{id}', function ($id) {
+    if (!$id) {
+        return response()->json(["message" => "Provide id"]);
+    }
+
+    $get_random_posts_query = DB::raw('SELECT * FROM Post WHERE author_id NOT IN (?) ORDER BY RAND() LIMIT 10');
+    $posts = DB::select($get_random_posts_query, [$id]);
+
+    for ($i = 0; $i < count($posts); $i++) {
+        $get_user_query = DB::raw('SELECT * FROM User WHERE id = ? LIMIT 1');
+        $users = DB::select($get_user_query, [$posts[$i]->author_id]);
+
+        $get_post_likes_query = DB::raw('SELECT COUNT(*) AS count FROM PostLike WHERE post_id = ?');
+        $likes = DB::select($get_post_likes_query, [$posts[$i]->id]);
+
+        $get_comments_query = DB::raw('SELECT COUNT(*) AS count FROM PostComment WHERE post_id = ?');
+        $comments = DB::select($get_comments_query, [$posts[$i]->id]);
+
+        $posts[$i]->likeCount = $likes[0]->count;
+        $posts[$i]->commentCount = $comments[0]->count;
+        $posts[$i]->author = $users[0];
+    }
+
+    return response()->json($posts);
 });
 
-Route::any('/post/get/{id}', function (Request $req) {
-    return response()->json(["success" => true]);
-});
+Route::any('/post/delete/{id}', function ($id) {
+    if (!$id) {
+        return response()->json(["message" => "Provide id"]);
+    }
 
-Route::any('/post/discover/{id}', function (Request $req) {
-    return response()->json(["success" => true]);
-});
+    $delete_post_query = DB::raw('DELETE FROM Post WHERE id = ?');
+    $delete_likes_query = DB::raw('DELETE FROM PostLike WHERE post_id = ?');
+    $delete_comments_query = DB::raw('DELETE FROM PostComment WHERE post_id = ?');
+    DB::select($delete_comments_query, [$id]);
+    DB::select($delete_likes_query, [$id]);
+    DB::select($delete_post_query, [$id]);
 
-Route::any('/post/delete/{id}', function (Request $req) {
-    return response()->json(["success" => true]);
-});
-
-Route::any('/post/comment/delete/{id}', function (Request $req) {
     return response()->json(["success" => true]);
 });
 
 Route::any('/post/comment/send/{id}', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->body || !$body->post_id || !$body->author_id) {
+        return response()->status(400);
+    }
+
+    $create_comment_query = DB::raw('INSERT INTO PostComment (comment_body, post_id, user_id) VALUES (?, ?, ?)');
+    DB::select($create_comment_query, [$body->body, $body->post_id, $body->author_id]);
+
     return response()->json(["success" => true]);
 });
 
-Route::any('/message/send', function (Request $req) {
+Route::any('/post/comment/delete/{id}', function ($id) {
+    if (!$id) {
+        return response()->json(["message" => "Provide id"]);
+    }
+
+    $delete_comment_query = DB::raw('DELETE FROM PostComment WHERE id = ?');
+    DB::select($delete_comment_query, [$id]);
+
     return response()->json(["success" => true]);
 });
 
 Route::any('/message/create', function (Request $req) {
+    return response()->json(["success" => true]);
+});
+
+Route::any('/message/send', function (Request $req) {
     return response()->json(["success" => true]);
 });
 
