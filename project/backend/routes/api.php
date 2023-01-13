@@ -394,17 +394,79 @@ Route::any('/post/comment/delete/{id}', function ($id) {
 });
 
 Route::any('/message/create', function (Request $req) {
-    return response()->json(["success" => true]);
+    $body = json_decode($req->getContent());
+    if (count($body->participants) < 2) {
+        return response()->status(400);
+    }
+
+    $find_thread_query = DB::raw('SELECT thread_id FROM MessageThreadOnUser WHERE user_id = ? AND thread_id IN ( SELECT thread_id FROM MessageThreadOnUser WHERE user_id = ? ) LIMIT 1');
+    $threads = DB::select($find_thread_query, [$body->participants[0], $body->participants[1]]);
+
+    if (count($threads) > 0) {
+        return response()->json(["thread_id" => $threads[0]->thread_id]);
+    }
+
+    $create_thread_query = DB::raw('INSERT INTO MessageThread VALUES ();');
+    DB::select($create_thread_query);
+
+    $get_last_id_query = DB::raw('SELECT LAST_INSERT_ID() AS inserted_id');
+    $inserted_id = DB::select($get_last_id_query);
+
+    $create_participation_query = DB::raw('INSERT INTO MessageThreadOnUser (user_id, thread_id) VALUES (?, ?), (?, ?)');
+    DB::select($create_participation_query, [$body->participants[0], $inserted_id[0]->inserted_id, $body->participants[1], $inserted_id[0]->inserted_id]);
+
+    return response()->json(["thread_id" => $inserted_id[0]->inserted_id]);
 });
 
 Route::any('/message/send', function (Request $req) {
+    $body = json_decode($req->getContent());
+    if (!$body->author_id || !$body->thread_id || !$body->body) {
+        return response()->status(400);
+    }
+
+    $send_message_query = DB::raw('INSERT INTO Message (message_body, author_id, thread_id) VALUES (?, ?, ?)');
+    DB::select($send_message_query, [$body->body, $body->author_id, $body->thread_id]);
+
     return response()->json(["success" => true]);
 });
 
-Route::any('/message/all/{id}', function (Request $req) {
-    return response()->json(["success" => true]);
+Route::any('/message/all/{id}', function ($id) {
+    if (!$id) {
+        return response()->json(["message" => "Provide id"]);
+    }
+
+    $get_messages_query = DB::raw('SELECT * FROM Message WHERE thread_id = ? ORDER BY created_at ASC');
+    $messages = DB::select($get_messages_query, [$id]);
+
+    for ($i = 0; $i < count($messages); $i++) {
+        $get_user_query = DB::raw('SELECT * FROM User WHERE id = ? LIMIT 1');
+        $users = DB::select($get_user_query, [$messages[$i]->author_id]);
+
+        $messages[$i]->author = $users[0];
+    }
+
+    return response()->json($messages);
 });
 
-Route::any('/message/threads/{id}', function (Request $req) {
-    return response()->json(["success" => true]);
+Route::any('/message/threads/{id}', function ($id) {
+    if (!$id) {
+        return response()->json(["message" => "Provide id"]);
+    }
+
+    $find_thread_query = DB::raw('SELECT * FROM MessageThreadOnUser WHERE user_id = ? ORDER BY created_at DESC');
+    $threadRefs = DB::select($find_thread_query, [$id]);
+
+    $threads = [];
+    for ($i = 0; $i < count($threadRefs); $i++) {
+        $get_thread_query = DB::raw('SELECT * FROM MessageThread WHERE id = ? LIMIT 1');
+        $found_threads = DB::select($get_thread_query, [$threadRefs[$i]->thread_id]);
+
+        $get_user_query = DB::raw('SELECT * FROM User WHERE id IN ( SELECT user_id FROM MessageThreadOnUser WHERE thread_id = ? AND NOT user_id = ? ) LIMIT 1');
+        $users = DB::select($get_user_query, [$threadRefs[$i]->thread_id, $id]);
+
+        $found_threads[0]->user = $users[0];
+        array_push($threads, $found_threads[0]);
+    }
+
+    return response()->json($threads);
 });
