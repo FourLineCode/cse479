@@ -15,7 +15,7 @@ export function AnonPost({ post }) {
 
   const getLiked = async () => {
     try {
-      const res = await fetch("/api/post/liked", {
+      const res = await fetch("http://localhost:8000/api/post/liked", {
         method: "POST",
         body: JSON.stringify({
           user_id: auth.user.id,
@@ -36,7 +36,7 @@ export function AnonPost({ post }) {
   const likePost = async () => {
     try {
       if (liked) {
-        const res = await fetch(`/api/post/unlike`, {
+        const res = await fetch(`http://localhost:8000/api/post/unlike`, {
           method: "POST",
           body: JSON.stringify({
             post_id: post.id,
@@ -49,7 +49,7 @@ export function AnonPost({ post }) {
           setLikeCount((prev) => prev - 1);
         }
       } else {
-        const res = await fetch(`/api/post/like`, {
+        const res = await fetch(`http://localhost:8000/api/post/like`, {
           method: "POST",
           body: JSON.stringify({
             post_id: post.id,
@@ -69,7 +69,7 @@ export function AnonPost({ post }) {
 
   const deletePost = async () => {
     try {
-      const res = await fetch(`/api/post/delete/${post.id}`);
+      const res = await fetch(`http://localhost:8000/api/post/delete/${post.id}`);
       const data = await res.json();
       if (data.success) {
         setState(false);

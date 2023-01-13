@@ -9,7 +9,7 @@ export function Comment({ comment }) {
 
   const deleteComment = async () => {
     try {
-      const res = await fetch(`/api/post/comment/delete/${comment.id}`);
+      const res = await fetch(`http://localhost:8000/api/post/comment/delete/${comment.id}`);
       const data = await res.json();
       if (data.success) {
         setState(false);

@@ -17,7 +17,7 @@ export default function Login() {
       password: formData.get("password"),
     };
 
-    const res = await fetch("/api/login", {
+    const res = await fetch("http://localhost:8000/api/login", {
       method: "POST",
       body: JSON.stringify(input),
     });

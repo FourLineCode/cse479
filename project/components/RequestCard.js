@@ -8,7 +8,7 @@ export function RequestCard({ request }) {
 
   const accept = async () => {
     try {
-      const res = await fetch("/api/request/accept", {
+      const res = await fetch("http://localhost:8000/api/request/accept", {
         method: "POST",
         body: JSON.stringify({
           from: request.from_user_id,
@@ -26,7 +26,7 @@ export function RequestCard({ request }) {
 
   const decline = async () => {
     try {
-      const res = await fetch("/api/request/decline", {
+      const res = await fetch("http://localhost:8000/api/request/decline", {
         method: "POST",
         body: JSON.stringify({
           from: request.from_user_id,

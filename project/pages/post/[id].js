@@ -14,7 +14,7 @@ export default function PostPage() {
 
   const getPost = async () => {
     try {
-      const res = await fetch(`/api/post/get/${id}`);
+      const res = await fetch(`http://localhost:8000/api/post/get/${id}`);
       const data = await res.json();
       if (data) {
         setPost(data);
@@ -36,7 +36,7 @@ export default function PostPage() {
     const form = new FormData(e.target);
 
     try {
-      const res = await fetch(`/api/post/comment/send/${post.id}`, {
+      const res = await fetch(`http://localhost:8000/api/post/comment/send/${post.id}`, {
         method: "POST",
         body: JSON.stringify({
           body: form.get("comment"),

@@ -16,7 +16,7 @@ export default function Signup() {
       bio: formData.get("bio"),
     };
 
-    const res = await fetch("/api/signup", {
+    const res = await fetch("http://localhost:8000/api/signup", {
       method: "POST",
       body: JSON.stringify(input),
     });

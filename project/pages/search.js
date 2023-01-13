@@ -19,7 +19,7 @@ export default function Search() {
     }
 
     try {
-      const res = await fetch(`/api/user/search/${searchTerm}`);
+      const res = await fetch(`http://localhost:8000/api/user/search/${searchTerm}`);
       const data = await res.json();
       setUsers(data);
     } catch (error) {

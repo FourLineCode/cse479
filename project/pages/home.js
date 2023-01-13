@@ -13,7 +13,7 @@ export default function Home() {
 
   const getTimeline = async () => {
     try {
-      const res = await fetch(`/api/post/timeline/${auth.user.id}`);
+      const res = await fetch(`http://localhost:8000/api/post/timeline/${auth.user.id}`);
       const data = await res.json();
       setTimeline(data);
     } catch (error) {
@@ -23,7 +23,7 @@ export default function Home() {
 
   const getRequests = async () => {
     try {
-      const res = await fetch(`/api/request/timeline/${auth.user.id}`);
+      const res = await fetch(`http://localhost:8000/api/request/timeline/${auth.user.id}`);
       const data = await res.json();
       setRequests(data);
     } catch (error) {
@@ -40,7 +40,7 @@ export default function Home() {
 
   const sendPost = async () => {
     try {
-      const res = await fetch("/api/post/send", {
+      const res = await fetch("http://localhost:8000/api/post/send", {
         method: "POST",
         body: JSON.stringify({
           post,

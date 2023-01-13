@@ -16,7 +16,7 @@ export default function Profile() {
 
   const getUser = async () => {
     try {
-      const res = await fetch(`/api/user/${id}`);
+      const res = await fetch(`http://localhost:8000/api/user/${id}`);
       const data = await res.json();
       setUser(data);
     } catch (error) {
@@ -26,7 +26,7 @@ export default function Profile() {
 
   const getState = async () => {
     try {
-      const res = await fetch(`/api/user/state`, {
+      const res = await fetch(`http://localhost:8000/api/user/state`, {
         method: "POST",
         body: JSON.stringify({
           curr_id: auth.user.id,
@@ -42,7 +42,7 @@ export default function Profile() {
 
   const getPosts = async () => {
     try {
-      const res = await fetch(`/api/user/posts/${id}`);
+      const res = await fetch(`http://localhost:8000/api/user/posts/${id}`);
       const data = await res.json();
       setPosts(data);
     } catch (error) {
@@ -60,7 +60,7 @@ export default function Profile() {
 
   const goToThread = async () => {
     try {
-      const res = await fetch("/api/message/create", {
+      const res = await fetch("http://localhost:8000/api/message/create", {
         method: "POST",
         body: JSON.stringify({
           participants: [auth.user.id, id],

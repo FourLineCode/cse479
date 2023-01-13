@@ -18,7 +18,7 @@ export default function MessagePage() {
 
   const getAllThreads = async () => {
     try {
-      const res = await fetch(`/api/message/threads/${auth.user.id}`);
+      const res = await fetch(`http://localhost:8000/api/message/threads/${auth.user.id}`);
       const data = await res.json();
       setThreads(data);
     } catch (error) {
@@ -34,7 +34,7 @@ export default function MessagePage() {
 
   const getMessages = async () => {
     try {
-      const res = await fetch(`/api/message/all/${id}`);
+      const res = await fetch(`http://localhost:8000/api/message/all/${id}`);
       const data = await res.json();
       setMessages(data);
     } catch (error) {
@@ -73,7 +73,7 @@ export default function MessagePage() {
     const form = new FormData(e.target);
 
     try {
-      const res = await fetch("/api/message/send", {
+      const res = await fetch("http://localhost:8000/api/message/send", {
         method: "POST",
         body: JSON.stringify({
           author_id: auth.user.id,

@@ -1,40 +1,54 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+// $users = DB::table('User')->get();
+// return response()->json($users);
 
-Route::get('/hello', function () {
-    return response()->json(array(
-        "foo" => "bar"
-    ));
+Route::any('/signup', function (Request $req) {
+    $body = json_decode($req->getContent());
+
+    $exisiting_users_query = DB::raw('SELECT * FROM User WHERE email = ? OR username = ?');
+    $existing_users = DB::select($exisiting_users_query, [$body->email, $body->username]);
+
+    if (count($existing_users) > 0) {
+        return response()->json([
+            "success" => false,
+            "message" => "User exists with given email or username",
+        ]);
+    }
+
+    $create_user_query = 'INSERT INTO User (email, username, password_hash, bio) VALUES (?, ?, ?, ?)';
+    DB::select($create_user_query, [$body->email, $body->username, $body->password, $body->bio]);
+
+    return response()->json(["success" => true]);
 });
 
-Route::get('/users', function () {
-    $users = DB::table('users')->get();
-    return response()->json($users);
-});
+Route::any('/login', function (Request $req) {
+    $body = json_decode($req->getContent());
 
-Route::any('/signup', function () {
-    return response()->json(array(
-        "message" => "hello"
-    ));
-});
+    $exisiting_users_query = DB::raw('SELECT * FROM User WHERE email = ? LIMIT 1');
+    $existing_users = DB::select($exisiting_users_query, [$body->email]);
 
-Route::any('/login', function () {
-    return response()->json(array(
-        "message" => "hello"
-    ));
+    if (count($existing_users) <= 0) {
+        return response()->json([
+            "success" => false,
+            "message" => "User not found",
+        ]);
+    }
+
+    $user = $existing_users[0];
+    if ($body->password != $user->password_hash) {
+        return response()->json([
+            "success" => false,
+            "message" => "Invalid credentials",
+        ]);
+    }
+
+    return response()->json(["success" => true, "user" => $user]);
 });
 
 Route::any('/user/state', function () {
