@@ -18,6 +18,7 @@ services:
     networks:
       - cse479
     environment:
+      TZ: Asia/Dhaka
       MYSQL_DATABASE: "social_media"
       MYSQL_ALLOW_EMPTY_PASSWORD: true
 

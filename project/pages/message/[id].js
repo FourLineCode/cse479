@@ -45,7 +45,7 @@ export default function MessagePage() {
   useEffect(() => {
     if (id !== "null") {
       getMessages();
-      interval = setInterval(getMessages, 1000);
+      interval = setInterval(getMessages, 500);
     } else {
       clearInterval(interval);
     }
