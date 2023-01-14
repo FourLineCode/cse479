@@ -1,5 +1,5 @@
-import fs from "fs/promises";
-import { db, query } from "./db.js";
+const fs = require("fs/promises");
+const { db, query } = require("./db.js");
 
 (async () => {
   const seedQuery = await fs.readFile(process.cwd() + "/mysql/query.sql", "utf-8");

@@ -1,6 +1,6 @@
-import mysql from "serverless-mysql";
+const mysql = require("serverless-mysql");
 
-export const db = mysql({
+const db = mysql({
   config: {
     host: "localhost",
     port: "3306",
@@ -11,7 +11,7 @@ export const db = mysql({
   },
 });
 
-export async function query(q, d) {
+async function query(q, d) {
   try {
     const data = await db.query(q, d);
     db.end();
@@ -21,3 +21,5 @@ export async function query(q, d) {
     throw error;
   }
 }
+
+module.exports = { db, query };

@@ -15,6 +15,24 @@ services:
       - ./db:/var/lib/mysql
     ports:
       - 3306:3306
+    networks:
+      - cse479
     environment:
       MYSQL_DATABASE: "social_media"
       MYSQL_ALLOW_EMPTY_PASSWORD: true
+
+  backend:
+    build: ./backend
+    container_name: backend
+    volumes:
+      - ./backend/.env:/.env
+    ports:
+      - 8000:8000
+    networks:
+      - cse479
+    depends_on:
+      - mysql
+
+networks:
+  cse479:
+    driver: bridge
