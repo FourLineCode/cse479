@@ -1,25 +1,27 @@
 {
   "name": "frontend",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "seed": "node ./lib/seed.js",
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@heroicons/react": "v1",
+    "@heroicons/react": "^2.0.13",
     "date-fns": "^2.29.3",
-    "next": "12",
-    "react": "17",
-    "react-dom": "17",
+    "next": "^13.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "serverless-mysql": "^1.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.20",
-    "prettier": "^2.8.1",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.3",
     "tailwindcss": "^3.2.4"
   }
 }

@@ -2,14 +2,15 @@
 DROP DATABASE IF EXISTS social_media;
 CREATE DATABASE IF NOT EXISTS social_media;
 SET GLOBAL time_zone = "+06:00";
+USE social_media;
 
 -- Create User table
 CREATE TABLE User (
     id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    email TEXT NOT NULL,
-    username TEXT NOT NULL,
-    password_hash TEXT NOT NULL,
+    email VARCHAR(256) NOT NULL,
+    username VARCHAR(256) NOT NULL,
+    password_hash VARCHAR(256) NOT NULL,
     bio TEXT
 );
 

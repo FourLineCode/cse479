@@ -16,8 +16,6 @@
 **/.env.test.local
 **/.env.production.local
 **/.vercel
-**/package-lock.json
-**/pnpm-lock.yaml
 
 **/node_modules
 **/public/build
@@ -38,3 +36,4 @@
 **/.idea
 **/.vscode
 **/db.sqlite
+**/db
