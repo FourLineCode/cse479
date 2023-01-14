@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import { useContext, useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { AuthContext } from "../../components/Context";
-import { Layout } from "../../components/Layout";
-import { Message } from "../../components/Message";
-import { ThreadCard } from "../../components/ThreadCard";
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../components/Context';
+import { Layout } from '../../components/Layout';
+import { Message } from '../../components/Message';
+import { ThreadCard } from '../../components/ThreadCard';
 
 export default function MessagePage() {
   const auth = useContext(AuthContext);
@@ -43,7 +43,7 @@ export default function MessagePage() {
   };
 
   useEffect(() => {
-    if (id !== "null") {
+    if (id !== 'null') {
       getMessages();
       interval = setInterval(getMessages, 500);
     } else {
@@ -73,12 +73,12 @@ export default function MessagePage() {
     const form = new FormData(e.target);
 
     try {
-      const res = await fetch("http://localhost:8000/api/message/send", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/message/send', {
+        method: 'POST',
         body: JSON.stringify({
           author_id: auth.user.id,
           thread_id: id,
-          body: form.get("message"),
+          body: form.get('message'),
         }),
       });
       const data = await res.json();
@@ -107,14 +107,18 @@ export default function MessagePage() {
             ))}
         </div>
         <div className="flex-1 space-y-4">
-          {id === "null" ? (
+          {id === 'null' ? (
             <div className="flex items-center justify-center w-full h-full text-2xl font-bold text-gray-500">
               Click on a thread to send message
             </div>
           ) : (
             <div className="flex flex-col w-full h-full">
-              <div ref={container} className="flex-1 w-full mb-4 space-y-4 overflow-y-auto divide-y divide-gray-800">
-                {messages.length > 0 && messages.map((message) => <Message message={message} key={message.id} />)}
+              <div
+                ref={container}
+                className="flex-1 w-full mb-4 space-y-4 overflow-y-auto divide-y divide-gray-800"
+              >
+                {messages.length > 0 &&
+                  messages.map((message) => <Message message={message} key={message.id} />)}
               </div>
               <form action="submit" onSubmit={onSubmit}>
                 <input

@@ -1,7 +1,7 @@
-import { TrashIcon } from "@heroicons/react/solid";
-import { formatDistanceToNow } from "date-fns";
-import { useContext, useState } from "react";
-import { AuthContext } from "./Context";
+import { TrashIcon } from '@heroicons/react/solid';
+import { formatDistanceToNow } from 'date-fns';
+import { useContext, useState } from 'react';
+import { AuthContext } from './Context';
 
 export function Comment({ comment }) {
   const auth = useContext(AuthContext);
@@ -27,7 +27,9 @@ export function Comment({ comment }) {
         </div>
         <div>
           <div className="font-semibold text-md">{comment.author.username}</div>
-          <div className="text-xs text-gray-400">{formatDistanceToNow(new Date(comment.created_at))}</div>
+          <div className="text-xs text-gray-400">
+            {formatDistanceToNow(new Date(comment.created_at))}
+          </div>
         </div>
       </div>
       <div className="pt-2 pl-8 text-md">{comment.comment_body}</div>

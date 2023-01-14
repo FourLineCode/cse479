@@ -1,5 +1,5 @@
-import { formatDistanceToNow } from "date-fns";
-import Link from "next/link";
+import { formatDistanceToNow } from 'date-fns';
+import Link from 'next/link';
 
 export function Usercard({ user }) {
   return (
@@ -10,7 +10,9 @@ export function Usercard({ user }) {
         </div>
         <div>
           <div className="text-xl font-semibold">{user.username}</div>
-          <div className="text-sm text-gray-400">{`Joined ${formatDistanceToNow(new Date(user.created_at))}`}</div>
+          <div className="text-sm text-gray-400">{`Joined ${formatDistanceToNow(
+            new Date(user.created_at)
+          )}`}</div>
         </div>
       </a>
     </Link>

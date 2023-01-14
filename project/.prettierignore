@@ -3,3 +3,4 @@
 **/.next/**
 **/.turbo/**
 **/.localstack/**
+/backend

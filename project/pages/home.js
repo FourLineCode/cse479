@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { AuthContext } from "../components/Context";
-import { Layout } from "../components/Layout";
-import { Post } from "../components/Post";
-import { RequestCard } from "../components/RequestCard";
+import { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../components/Context';
+import { Layout } from '../components/Layout';
+import { Post } from '../components/Post';
+import { RequestCard } from '../components/RequestCard';
 
 export default function Home() {
   const auth = useContext(AuthContext);
-  const [post, setPost] = useState("");
+  const [post, setPost] = useState('');
   const [timeline, setTimeline] = useState([]);
   const [requests, setRequests] = useState([]);
 
@@ -40,8 +40,8 @@ export default function Home() {
 
   const sendPost = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/post/send", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/post/send', {
+        method: 'POST',
         body: JSON.stringify({
           post,
           author_id: auth.user.id,
@@ -52,7 +52,7 @@ export default function Home() {
       toast.error(error.message);
     }
 
-    setPost("");
+    setPost('');
   };
 
   return (
@@ -71,7 +71,10 @@ export default function Home() {
                 <span>Character length: </span>
                 <span className="text-gray-200">{post.length}</span>
               </div>
-              <button onClick={sendPost} className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">
+              <button
+                onClick={sendPost}
+                className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
+              >
                 Share Post
               </button>
             </div>
@@ -80,7 +83,9 @@ export default function Home() {
             {timeline.length > 0 ? (
               timeline.map((post) => <Post post={post} key={post.id} />)
             ) : (
-              <div className="pt-12 text-2xl font-bold text-center text-gray-400">No posts to show</div>
+              <div className="pt-12 text-2xl font-bold text-center text-gray-400">
+                No posts to show
+              </div>
             )}
           </div>
         </div>

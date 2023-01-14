@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
-import toast from "react-hot-toast";
-import { AuthContext } from "./Context";
+import { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from './Context';
 
 export function RequestButton({ state: initial, user }) {
   const auth = useContext(AuthContext);
@@ -8,8 +8,8 @@ export function RequestButton({ state: initial, user }) {
 
   const addFriend = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/request/send", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/request/send', {
+        method: 'POST',
         body: JSON.stringify({
           from: auth.user.id,
           to: user.id,
@@ -17,8 +17,8 @@ export function RequestButton({ state: initial, user }) {
       });
       const data = await res.json();
       if (data.success) {
-        setState("SENT");
-        toast.success("Request sent");
+        setState('SENT');
+        toast.success('Request sent');
       }
     } catch (error) {
       toast.error(error.message);
@@ -27,8 +27,8 @@ export function RequestButton({ state: initial, user }) {
 
   const unfriend = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/request/unfriend", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/request/unfriend', {
+        method: 'POST',
         body: JSON.stringify({
           first: auth.user.id,
           second: user.id,
@@ -36,8 +36,8 @@ export function RequestButton({ state: initial, user }) {
       });
       const data = await res.json();
       if (data.success) {
-        setState("NONE");
-        toast.success("Unfriended successfully");
+        setState('NONE');
+        toast.success('Unfriended successfully');
       }
     } catch (error) {
       toast.error(error.message);
@@ -46,8 +46,8 @@ export function RequestButton({ state: initial, user }) {
 
   const unsend = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/request/unsend", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/request/unsend', {
+        method: 'POST',
         body: JSON.stringify({
           from: auth.user.id,
           to: user.id,
@@ -55,8 +55,8 @@ export function RequestButton({ state: initial, user }) {
       });
       const data = await res.json();
       if (data.success) {
-        setState("NONE");
-        toast.success("Unsent request");
+        setState('NONE');
+        toast.success('Unsent request');
       }
     } catch (error) {
       toast.error(error.message);
@@ -65,8 +65,8 @@ export function RequestButton({ state: initial, user }) {
 
   const accept = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/request/accept", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/request/accept', {
+        method: 'POST',
         body: JSON.stringify({
           from: user.id,
           to: auth.user.id,
@@ -74,8 +74,8 @@ export function RequestButton({ state: initial, user }) {
       });
       const data = await res.json();
       if (data.success) {
-        setState("FRIEND");
-        toast.success("Request accepted");
+        setState('FRIEND');
+        toast.success('Request accepted');
       }
     } catch (error) {
       toast.error(error.message);
@@ -84,8 +84,8 @@ export function RequestButton({ state: initial, user }) {
 
   const decline = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/request/decline", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/request/decline', {
+        method: 'POST',
         body: JSON.stringify({
           from: user.id,
           to: auth.user.id,
@@ -93,27 +93,30 @@ export function RequestButton({ state: initial, user }) {
       });
       const data = await res.json();
       if (data.success) {
-        setState("NONE");
-        toast.success("Request declined");
+        setState('NONE');
+        toast.success('Request declined');
       }
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  return state === "NONE" ? (
-    <button onClick={addFriend} className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">
+  return state === 'NONE' ? (
+    <button
+      onClick={addFriend}
+      className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
+    >
       Add Friend
     </button>
-  ) : state === "FRIEND" ? (
+  ) : state === 'FRIEND' ? (
     <button onClick={unfriend} className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">
       Unfriend
     </button>
-  ) : state === "SENT" ? (
+  ) : state === 'SENT' ? (
     <button onClick={unsend} className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">
       Unsend Request
     </button>
-  ) : state === "PENDING" ? (
+  ) : state === 'PENDING' ? (
     <>
       <button
         onClick={decline}

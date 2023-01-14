@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { AnonPost } from "../components/AnonPost";
-import { AuthContext } from "../components/Context";
-import { Layout } from "../components/Layout";
-import { RequestCard } from "../components/RequestCard";
+import { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { AnonPost } from '../components/AnonPost';
+import { AuthContext } from '../components/Context';
+import { Layout } from '../components/Layout';
+import { RequestCard } from '../components/RequestCard';
 
 export default function Discover() {
   const auth = useContext(AuthContext);
-  const [post, setPost] = useState("");
+  const [post, setPost] = useState('');
   const [timeline, setTimeline] = useState([]);
   const [requests, setRequests] = useState([]);
 
@@ -40,8 +40,8 @@ export default function Discover() {
 
   const sendPost = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/post/send", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/post/send', {
+        method: 'POST',
         body: JSON.stringify({
           post,
           author_id: auth.user.id,
@@ -52,7 +52,7 @@ export default function Discover() {
       toast.error(error.message);
     }
 
-    setPost("");
+    setPost('');
   };
 
   return (
@@ -63,7 +63,9 @@ export default function Discover() {
             {timeline.length > 0 ? (
               timeline.map((post) => <AnonPost post={post} key={post.id} />)
             ) : (
-              <div className="pt-12 text-2xl font-bold text-center text-gray-400">No posts to show</div>
+              <div className="pt-12 text-2xl font-bold text-center text-gray-400">
+                No posts to show
+              </div>
             )}
           </div>
         </div>

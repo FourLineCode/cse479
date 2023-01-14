@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { AnonComment } from "../../../components/AnonComment";
-import { AnonPost } from "../../../components/AnonPost";
-import { AuthContext } from "../../../components/Context";
-import { Layout } from "../../../components/Layout";
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { AnonComment } from '../../../components/AnonComment';
+import { AnonPost } from '../../../components/AnonPost';
+import { AuthContext } from '../../../components/Context';
+import { Layout } from '../../../components/Layout';
 
 export default function AnonPostPage() {
   const auth = useContext(AuthContext);
@@ -37,9 +37,9 @@ export default function AnonPostPage() {
 
     try {
       const res = await fetch(`http://localhost:8000/api/post/comment/send/${post.id}`, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({
-          body: form.get("comment"),
+          body: form.get('comment'),
           post_id: post.id,
           author_id: auth.user.id,
         }),
@@ -67,7 +67,9 @@ export default function AnonPostPage() {
               placeholder="Comment..."
               className="w-full p-3 text-white bg-gray-800 rounded-lg"
             />
-            <button className="px-3 py-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">Comment</button>
+            <button className="px-3 py-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">
+              Comment
+            </button>
           </form>
           <div className="mt-4 ml-4 text-gray-400">Comments</div>
           <div className="pt-2 space-y-4">

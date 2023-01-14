@@ -1,7 +1,7 @@
-import { GlobeAltIcon, TrashIcon } from "@heroicons/react/solid";
-import { formatDistanceToNow } from "date-fns";
-import { useContext, useState } from "react";
-import { AuthContext } from "./Context";
+import { GlobeAltIcon, TrashIcon } from '@heroicons/react/solid';
+import { formatDistanceToNow } from 'date-fns';
+import { useContext, useState } from 'react';
+import { AuthContext } from './Context';
 
 export function AnonComment({ comment }) {
   const auth = useContext(AuthContext);
@@ -27,7 +27,9 @@ export function AnonComment({ comment }) {
         </div>
         <div>
           <div className="font-semibold text-md">Anonymous</div>
-          <div className="text-xs text-gray-400">{formatDistanceToNow(new Date(comment.created_at))}</div>
+          <div className="text-xs text-gray-400">
+            {formatDistanceToNow(new Date(comment.created_at))}
+          </div>
         </div>
       </div>
       <div className="pt-2 pl-8 text-md">{comment.comment_body}</div>

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from 'react';
 
 export const AuthContext = createContext();
 
@@ -10,7 +10,7 @@ export function AuthContextProvider({ children }) {
   });
 
   useEffect(() => {
-    const store = JSON.parse(window.localStorage.getItem("auth"));
+    const store = JSON.parse(window.localStorage.getItem('auth'));
     if (store && store.authorized) {
       setState(store);
     } else {
@@ -21,9 +21,11 @@ export function AuthContextProvider({ children }) {
 
   useEffect(() => {
     if (state.authorized) {
-      window.localStorage.setItem("auth", JSON.stringify(state));
+      window.localStorage.setItem('auth', JSON.stringify(state));
     }
   }, [state]);
 
-  return <AuthContext.Provider value={{ ...state, setAuth: setState }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ ...state, setAuth: setState }}>{children}</AuthContext.Provider>
+  );
 }

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { Layout } from "../components/Layout";
-import { Usercard } from "../components/Usercard";
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { Layout } from '../components/Layout';
+import { Usercard } from '../components/Usercard';
 
 export default function Search() {
   const [users, setUsers] = useState([]);
@@ -12,7 +12,7 @@ export default function Search() {
     setUsers([]);
 
     const form = new FormData(e.target);
-    const searchTerm = form.get("search");
+    const searchTerm = form.get('search');
 
     if (!searchTerm.trim()) {
       return;

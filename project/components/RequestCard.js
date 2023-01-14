@@ -1,6 +1,6 @@
-import { formatDistanceToNow } from "date-fns";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { formatDistanceToNow } from 'date-fns';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export function RequestCard({ request }) {
   const router = useRouter();
@@ -8,8 +8,8 @@ export function RequestCard({ request }) {
 
   const accept = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/request/accept", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/request/accept', {
+        method: 'POST',
         body: JSON.stringify({
           from: request.from_user_id,
           to: request.to_user_id,
@@ -26,8 +26,8 @@ export function RequestCard({ request }) {
 
   const decline = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/request/decline", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/request/decline', {
+        method: 'POST',
         body: JSON.stringify({
           from: request.from_user_id,
           to: request.to_user_id,
@@ -53,7 +53,9 @@ export function RequestCard({ request }) {
         </div>
         <div>
           <div className="font-semibold text-md">{request.from_user.username}</div>
-          <div className="text-sm text-gray-400">{`${formatDistanceToNow(new Date(request.created_at))} ago`}</div>
+          <div className="text-sm text-gray-400">{`${formatDistanceToNow(
+            new Date(request.created_at)
+          )} ago`}</div>
         </div>
       </div>
       <div className="flex items-center space-x-4 justify-evenly">
@@ -63,7 +65,10 @@ export function RequestCard({ request }) {
         >
           Decline
         </button>
-        <button onClick={accept} className="w-full px-2 py-1 font-bold bg-green-500 rounded-lg hover:bg-green-600">
+        <button
+          onClick={accept}
+          className="w-full px-2 py-1 font-bold bg-green-500 rounded-lg hover:bg-green-600"
+        >
           Accept
         </button>
       </div>

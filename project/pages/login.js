@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import toast from "react-hot-toast";
-import { AuthContext } from "../components/Context";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../components/Context';
 
 export default function Login() {
   const router = useRouter();
@@ -13,22 +13,22 @@ export default function Login() {
 
     const formData = new FormData(e.target);
     const input = {
-      email: formData.get("email"),
-      password: formData.get("password"),
+      email: formData.get('email'),
+      password: formData.get('password'),
     };
 
-    const res = await fetch("http://localhost:8000/api/login", {
-      method: "POST",
+    const res = await fetch('http://localhost:8000/api/login', {
+      method: 'POST',
       body: JSON.stringify(input),
     });
     const data = await res.json();
 
     if (data.success) {
-      toast.success("Successfully logged in");
+      toast.success('Successfully logged in');
       auth.setAuth({ authorized: true, user: data.user });
-      router.push("/home");
+      router.push('/home');
     } else {
-      toast.error(data.message ?? "Something went wrong");
+      toast.error(data.message ?? 'Something went wrong');
     }
   };
 
@@ -39,14 +39,27 @@ export default function Login() {
         <form action="submit" onSubmit={onSubmit} className="p-4 space-y-2">
           <div>
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" placeholder="Email" className="w-full p-2 rounded-lg" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="w-full p-2 rounded-lg"
+            />
           </div>
           <div>
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" placeholder="Password" className="w-full p-2 rounded-lg" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="w-full p-2 rounded-lg"
+            />
           </div>
           <div>
-            <button type="submit" className="w-full p-2 mt-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">
+            <button
+              type="submit"
+              className="w-full p-2 mt-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
+            >
               Login
             </button>
             <div className="mt-2 text-center">

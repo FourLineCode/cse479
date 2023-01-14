@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   frontend:
@@ -19,7 +19,7 @@ services:
       - cse479
     environment:
       TZ: Asia/Dhaka
-      MYSQL_DATABASE: "social_media"
+      MYSQL_DATABASE: 'social_media'
       MYSQL_ALLOW_EMPTY_PASSWORD: true
 
   backend:

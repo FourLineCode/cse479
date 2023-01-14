@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { AuthContext } from "../../components/Context";
-import { Layout } from "../../components/Layout";
-import { Post } from "../../components/Post";
-import { RequestButton } from "../../components/RequestButton";
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../components/Context';
+import { Layout } from '../../components/Layout';
+import { Post } from '../../components/Post';
+import { RequestButton } from '../../components/RequestButton';
 
 export default function Profile() {
   const router = useRouter();
@@ -12,7 +12,7 @@ export default function Profile() {
   const auth = useContext(AuthContext);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [state, setState] = useState("NONE");
+  const [state, setState] = useState('NONE');
 
   const getUser = async () => {
     try {
@@ -27,7 +27,7 @@ export default function Profile() {
   const getState = async () => {
     try {
       const res = await fetch(`http://localhost:8000/api/user/state`, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({
           curr_id: auth.user.id,
           user_id: id,
@@ -60,8 +60,8 @@ export default function Profile() {
 
   const goToThread = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/message/create", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/message/create', {
+        method: 'POST',
         body: JSON.stringify({
           participants: [auth.user.id, id],
         }),
@@ -93,7 +93,7 @@ export default function Profile() {
               <div className="pt-8 space-x-4">
                 {user.id !== auth.user.id && (
                   <>
-                    {state === "FRIEND" && (
+                    {state === 'FRIEND' && (
                       <button
                         onClick={goToThread}
                         className="p-2 font-bold bg-transparent rounded-lg ring-2 ring-green-500 hover:bg-green-500 hover:bg-opacity-40"
@@ -107,7 +107,9 @@ export default function Profile() {
               </div>
             </div>
           </div>
-          <div className="mt-4 text-xl font-bold text-center border-b-2 border-green-500">Posts</div>
+          <div className="mt-4 text-xl font-bold text-center border-b-2 border-green-500">
+            Posts
+          </div>
           <div className="w-full p-4 space-y-4">
             {posts.length > 0 && posts.map((post) => <Post post={post} key={post.id} />)}
           </div>

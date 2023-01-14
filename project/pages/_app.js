@@ -1,6 +1,6 @@
-import { Toaster } from "react-hot-toast";
-import { AuthContextProvider } from "../components/Context";
-import "../styles/tailwind.css";
+import { Toaster } from 'react-hot-toast';
+import { AuthContextProvider } from '../components/Context';
+import '../styles/tailwind.css';
 
 function MyApp({ Component, pageProps }) {
   return (

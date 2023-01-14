@@ -6,7 +6,7 @@ export function getServerSideProps() {
   return {
     redirect: {
       permanent: false,
-      destination: "/login",
+      destination: '/login',
     },
     props: {},
   };

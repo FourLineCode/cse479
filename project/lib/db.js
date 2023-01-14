@@ -1,12 +1,12 @@
-const mysql = require("serverless-mysql");
+const mysql = require('serverless-mysql');
 
 const db = mysql({
   config: {
-    host: "localhost",
-    port: "3306",
-    user: "root",
-    password: "",
-    database: "social_media",
+    host: 'localhost',
+    port: '3306',
+    user: 'root',
+    password: '',
+    database: 'social_media',
     multipleStatements: true,
   },
 });

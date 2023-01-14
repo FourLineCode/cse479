@@ -1,10 +1,10 @@
-import { AnnotationIcon, HeartIcon, TrashIcon } from "@heroicons/react/solid";
-import { formatDistanceToNow } from "date-fns";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { AuthContext } from "./Context";
+import { AnnotationIcon, HeartIcon, TrashIcon } from '@heroicons/react/solid';
+import { formatDistanceToNow } from 'date-fns';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { AuthContext } from './Context';
 
 export function Post({ post }) {
   const auth = useContext(AuthContext);
@@ -16,8 +16,8 @@ export function Post({ post }) {
 
   const getLiked = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/post/liked", {
-        method: "POST",
+      const res = await fetch('http://localhost:8000/api/post/liked', {
+        method: 'POST',
         body: JSON.stringify({
           user_id: auth.user.id,
           post_id: post.id,
@@ -38,7 +38,7 @@ export function Post({ post }) {
     try {
       if (liked) {
         const res = await fetch(`http://localhost:8000/api/post/unlike`, {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             post_id: post.id,
             user_id: auth.user.id,
@@ -51,7 +51,7 @@ export function Post({ post }) {
         }
       } else {
         const res = await fetch(`http://localhost:8000/api/post/like`, {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             post_id: post.id,
             user_id: auth.user.id,
@@ -89,7 +89,9 @@ export function Post({ post }) {
           </div>
           <div>
             <div className="text-xl font-semibold">{post.author.username}</div>
-            <div className="text-sm text-gray-400">{formatDistanceToNow(new Date(post.created_at))}</div>
+            <div className="text-sm text-gray-400">
+              {formatDistanceToNow(new Date(post.created_at))}
+            </div>
           </div>
         </div>
       </Link>
@@ -100,7 +102,7 @@ export function Post({ post }) {
             onClick={likePost}
             className="p-1.5 items-center space-x-2 hover:bg-gray-500 flex hover:bg-opacity-50 cursor-pointer rounded-full"
           >
-            <HeartIcon className={`w-5 h-5 ${liked ? "text-green-500" : "text-white"}`} />
+            <HeartIcon className={`w-5 h-5 ${liked ? 'text-green-500' : 'text-white'}`} />
             <span>{likeCount}</span>
           </div>
           <div

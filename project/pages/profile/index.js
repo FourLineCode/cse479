@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../components/Context";
-import { Layout } from "../../components/Layout";
+import { useRouter } from 'next/router';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../../components/Context';
+import { Layout } from '../../components/Layout';
 
 export default function ProfileIndex() {
   const auth = useContext(AuthContext);

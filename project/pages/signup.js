@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import toast from "react-hot-toast";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 export default function Signup() {
   const router = useRouter();
@@ -10,22 +10,22 @@ export default function Signup() {
 
     const formData = new FormData(e.target);
     const input = {
-      email: formData.get("email"),
-      username: formData.get("username"),
-      password: formData.get("password"),
-      bio: formData.get("bio"),
+      email: formData.get('email'),
+      username: formData.get('username'),
+      password: formData.get('password'),
+      bio: formData.get('bio'),
     };
 
-    const res = await fetch("http://localhost:8000/api/signup", {
-      method: "POST",
+    const res = await fetch('http://localhost:8000/api/signup', {
+      method: 'POST',
       body: JSON.stringify(input),
     });
     const data = await res.json();
     if (data.success) {
-      toast.success("Successfully signed up");
-      router.push("/login");
+      toast.success('Successfully signed up');
+      router.push('/login');
     } else {
-      toast.error(data.message ?? "Something went wrong");
+      toast.error(data.message ?? 'Something went wrong');
     }
   };
 
@@ -36,22 +36,40 @@ export default function Signup() {
         <form action="submit" onSubmit={onSubmit} className="p-4 space-y-2">
           <div>
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" placeholder="Email" className="w-full p-2 rounded-lg" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="w-full p-2 rounded-lg"
+            />
           </div>
           <div>
             <label htmlFor="username">Username</label>
-            <input type="text" name="username" placeholder="Username" className="w-full p-2 rounded-lg" />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              className="w-full p-2 rounded-lg"
+            />
           </div>
           <div>
             <label htmlFor="password">Password</label>
-            <input type="password" name="password" placeholder="Password" className="w-full p-2 rounded-lg" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="w-full p-2 rounded-lg"
+            />
           </div>
           <div>
             <label htmlFor="bio">Bio</label>
             <input type="text" name="bio" placeholder="Bio" className="w-full p-2 rounded-lg" />
           </div>
           <div>
-            <button type="submit" className="w-full p-2 mt-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">
+            <button
+              type="submit"
+              className="w-full p-2 mt-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
+            >
               Signup
             </button>
             <div className="mt-2 text-center">
